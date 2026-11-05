@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Driver - Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            background: #f2f5f9;
+            color: #172b4d;
+        }
+
+        .navbar {
+            background: #1976d2;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .logout {
+            background: white;
+            color: #1976d2;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .welcome,
+        .statistics-card,
+        .score-card,
+        .monitor-card,
+        .history-card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.1);
+
+            margin-bottom: 25px;
+        }
+
+        .welcome {
+            padding: 24px 30px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 10px;
+        }
+
+        .driver-name {
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .statistics-card h2,
+        .score-card h2 {
+            margin-bottom: 22px;
+            color: #172b4d;
+        }
+
+        .statistics-columns {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .statistics-columns .statistics-card,
+        .statistics-columns .score-card {
+            margin-bottom: 25px;
+        }
+
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 16px;
+        }
+
+        .driver-statistics {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .stat {
+            padding: 18px 14px;
+            border-left: 4px solid #1976d2;
+            background: #f7faff;
+        }
+
+        .stat strong {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 28px;
+            color: #172b4d;
+        }
+
+        .stat span {
+            color: #5f6b7a;
+            font-size: 14px;
+        }
+
+        .score-card {
+            text-align: center;
+        }
+
+        .score-value {
+            margin-bottom: 15px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        .score-bar {
+            height: 18px;
+            margin: 0 auto 16px;
+            max-width: 620px;
+            overflow: hidden;
+            background: repeating-linear-gradient(
+                90deg,
+                #dbe4ef 0,
+                #dbe4ef 22px,
+                #ffffff 22px,
+                #ffffff 26px
+            );
+        }
+
+        .score-fill {
+            width: 0;
+            height: 100%;
+            background: #1976d2;
+        }
+
+        .score-message {
+            color: #2f6f45;
+            font-weight: bold;
+        }
+
+        .error-message {
+            margin-bottom: 25px;
+            padding: 16px;
+            color: #a4262c;
+            background: #fde7e9;
+            border-radius: 7px;
+            text-align: center;
+        }
+
+        .monitor-card {
+            text-align: center;
+        }
+
+        .monitor-card h2,
+        .history-card h2 {
+            margin-bottom: 15px;
+        }
+
+        .monitor-card p,
+        .history-card p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        #startMonitoring,
+        #historyButton {
+
+            padding: 15px 30px;
+
+            background: #1976d2;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+        #startMonitoring:hover,
+        #historyButton:hover {
+            background: #125ca1;
+        }
+
+        #startMonitoring:disabled {
+            background: #888;
+            cursor: not-allowed;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .navbar h1 {
+                font-size: 18px;
+            }
+
+            .container {
+                margin: 22px auto;
+                padding: 14px;
+            }
+
+            .welcome,
+            .statistics-card,
+            .score-card,
+            .monitor-card,
+            .history-card {
+                padding: 22px;
+            }
+
+            .statistics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat:first-child {
+                grid-column: span 2;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================================
+     NAVBAR
+========================================================= -->
+
+<div class="navbar">
+
+    <h1>
+        AI Driver Monitoring System
+    </h1>
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</div>
+
+
+<!-- ========================================================
+     MAIN
+========================================================= -->
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h2>
+            Welcome, <span id="driverName" class="driver-name"></span>
+        </h2>
+
+        <p>Monitor your driving safety and review recorded events.</p>
+
+    </div>
+
+
+    <div class="statistics-columns">
+
+    <div class="statistics-card">
+
+        <h2>Driver Safety Statistics</h2>
+
+        <div class="statistics">
+
+            <div class="stat">
+                <strong id="totalEvents">--</strong>
+                <span>Total Events</span>
+            </div>
+
+            <div class="stat">
+                <strong id="drowsinessEvents">--</strong>
+                <span>Drowsiness</span>
+            </div>
+
+            <div class="stat">
+                <strong id="phoneEvents">--</strong>
+                <span>Phone Usage</span>
+            </div>
+
+            <div class="stat">
+                <strong id="yawningEvents">--</strong>
+                <span>Yawning</span>
+            </div>
+
+            <div class="stat">
+                <strong id="distractionEvents">--</strong>
+                <span>Distraction</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ====================================================
+         DRIVER-SPECIFIC STATISTICS
+    ===================================================== -->
+
+    <div class="statistics-card">
+
+        <h2><span id="specificDriverName">Driver</span>'s Safety Statistics</h2>
+
+        <div class="statistics driver-statistics">
+
+            <div class="stat">
+                <strong id="driverTotalEvents">--</strong>
+                <span>Total Events</span>
+            </div>
+
+            <div class="stat">
+                <strong id="driverDrowsinessEvents">--</strong>
+                <span>Drowsiness</span>
+            </div>
+
+            <div class="stat">
+                <strong id="driverPhoneEvents">--</strong>
+                <span>Phone Usage</span>
+            </div>
+
+            <div class="stat">
+                <strong id="driverYawningEvents">--</strong>
+                <span>Yawning</span>
+            </div>
+
+            <div class="stat">
+                <strong id="driverDistractionEvents">--</strong>
+                <span>Distraction</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    <div class="score-card">
+
+        <h2>Driver Safety Score</h2>
+
+        <div id="scoreValue" class="score-value">--/100</div>
+
+        <div id="scoreBar" class="score-bar" role="progressbar" aria-label="Driver safety score" aria-valuemin="0" aria-valuemax="100">
+            <div id="scoreFill" class="score-fill"></div>
+        </div>
+
+        <p id="scoreMessage" class="score-message">Loading...</p>
+
+    </div>
+
+    <div id="statisticsError" class="error-message" role="alert" hidden></div>
+
+
+    <!-- ====================================================
+         MONITORING
+    ===================================================== -->
+
+    <div class="monitor-card">
+
+        <h2>
+            Driver Monitoring
+        </h2>
+
+        <p>
+            Start the AI Driver Monitoring System
+            to monitor drowsiness, phone usage,
+            yawning and head position.
+        </p>
+
+
+        <button
+            id="startMonitoring"
+            onclick="startMonitoring()"
+        >
+            Start Monitoring
+        </button>
+
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <!-- ====================================================
+         EVENT HISTORY
+    ===================================================== -->
+
+    <div class="history-card">
+
+        <h2>
+            Event History
+        </h2>
+
+        <p>
+            View all driver safety events recorded
+            during monitoring.
+        </p>
+
+
+        <button
+            id="historyButton"
+            onclick="openEventHistory()"
+        >
+            View Event History
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+// ============================================================
+// CHECK LOGIN
+// ============================================================
+
+const username =
+    localStorage.getItem("username");
+
+
+if (!username) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+// ============================================================
+// DISPLAY USERNAME
+// ============================================================
+
+document.getElementById(
+    "driverName"
+).innerText = username;
+
+document.getElementById(
+    "specificDriverName"
+).innerText = username;
+
+
+// ============================================================
+// LOAD LIVE SAFETY STATISTICS
+// ============================================================
+
+async function loadSafetyStatistics() {
+
+    const errorElement = document.getElementById("statisticsError");
+
+    try {
+
+        const overallResponse = await fetch(
+            "http://127.0.0.1:5000/api/dashboard/stats"
+        );
+        const driverResponse = await fetch(
+            "http://127.0.0.1:5000/api/dashboard/stats/"
+            + encodeURIComponent(username)
+        );
+
+        if (!overallResponse.ok || !driverResponse.ok) {
+            throw new Error("Dashboard statistics request failed");
+        }
+
+        const overall = await overallResponse.json();
+        const driver = await driverResponse.json();
+
+        if (!overall.success || !driver.success) {
+            throw new Error("Dashboard statistics response failed");
+        }
+
+        document.getElementById("totalEvents").textContent = overall.total_events;
+        document.getElementById("drowsinessEvents").textContent = overall.drowsiness;
+        document.getElementById("phoneEvents").textContent = overall.phone_usage;
+        document.getElementById("yawningEvents").textContent = overall.yawning;
+        document.getElementById("distractionEvents").textContent = overall.distraction;
+
+        document.getElementById("driverTotalEvents").textContent = driver.total_events;
+        document.getElementById("driverDrowsinessEvents").textContent = driver.drowsiness;
+        document.getElementById("driverPhoneEvents").textContent = driver.phone_usage;
+        document.getElementById("driverYawningEvents").textContent = driver.yawning;
+        document.getElementById("driverDistractionEvents").textContent = driver.distraction;
+
+        const score = Math.max(
+            0,
+            Math.min(
+                100,
+                100
+                    - driver.drowsiness * 10
+                    - driver.phone_usage * 15
+                    - driver.yawning * 5
+                    - driver.distraction * 10
+            )
+        );
+
+        document.getElementById("scoreValue").textContent = score + "/100";
+        document.getElementById("scoreFill").style.width = score + "%";
+        document.getElementById("scoreBar").setAttribute("aria-valuenow", score);
+        document.getElementById("scoreMessage").textContent =
+            score >= 80
+                ? "Excellent Driving"
+                : score >= 60
+                    ? "Good Driving - Be Careful"
+                    : score >= 40
+                        ? "Warning - Drive Carefully"
+                        : "Dangerous Driving - Take a Break";
+
+        errorElement.hidden = true;
+
+    }
+    catch (error) {
+
+        console.error("Unable to load safety statistics:", error);
+        errorElement.textContent =
+            "Unable to load dashboard statistics. Please make sure Flask server is running.";
+        errorElement.hidden = false;
+
+    }
+
+}
+
+
+loadSafetyStatistics();
+
+setInterval(
+    loadSafetyStatistics,
+    3000
+);
+
+
+// ============================================================
+// VARIABLES
+// ============================================================
+
+let monitoringStarted = false;
+
+let monitoringTimer = null;
+
+
+// ============================================================
+// START MONITORING
+// ============================================================
+
+async function startMonitoring() {
+
+    const button =
+        document.getElementById(
+            "startMonitoring"
+        );
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    const currentUsername =
+        localStorage.getItem(
+            "username"
+        );
+
+
+    if (!currentUsername) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "Starting Monitoring...";
+
+
+    message.innerText =
+        "Starting AI Driver Monitoring...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:5000/start-monitoring",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        username:
+                            currentUsername
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        // ====================================================
+        // SUCCESS
+        // ====================================================
+
+        if (data.success) {
+
+            monitoringStarted = true;
+
+
+            button.innerText =
+                "Monitoring Running";
+
+
+            message.innerText =
+                "Monitoring is running. Press Q to stop.";
+
+
+            // Start checking status
+
+            startMonitoringStatusCheck();
+
+        }
+
+
+        // ====================================================
+        // ERROR
+        // ====================================================
+
+        else {
+
+            message.innerText =
+                data.message ||
+                "Failed to start monitoring.";
+
+            button.disabled = false;
+
+            button.innerText =
+                "Start Monitoring";
+
+        }
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        message.innerText =
+            "Cannot connect to Flask server.";
+
+        button.disabled = false;
+
+        button.innerText =
+            "Start Monitoring";
+
+    }
+
+}
+
+
+// ============================================================
+// CHECK WHETHER MONITORING IS STILL RUNNING
+// ============================================================
+
+function startMonitoringStatusCheck() {
+
+    if (monitoringTimer) {
+
+        clearInterval(
+            monitoringTimer
+        );
+
+    }
+
+
+    monitoringTimer =
+        setInterval(
+            async function() {
+
+                if (!monitoringStarted) {
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://127.0.0.1:5000/monitoring-status"
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    // =================================================
+                    // MONITORING STOPPED
+                    // =================================================
+
+                    if (
+                        data.running === false
+                    ) {
+
+                        monitoringStarted =
+                            false;
+
+
+                        clearInterval(
+                            monitoringTimer
+                        );
+
+
+                        messageAfterMonitoring();
+
+                    }
+
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        "Checking monitoring..."
+                    );
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+// ============================================================
+// AFTER Q IS PRESSED
+// ============================================================
+
+function messageAfterMonitoring() {
+
+    const button =
+        document.getElementById(
+            "startMonitoring"
+        );
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    button.disabled = false;
+
+    button.innerText =
+        "Start Monitoring";
+
+
+    message.innerText =
+        "Monitoring stopped. Opening Event History...";
+
+    loadSafetyStatistics();
+
+
+    // Wait 1.5 seconds so the events
+    // have time to finish saving
+
+    setTimeout(
+        function() {
+
+            openEventHistory();
+
+        },
+        1500
+    );
+
+}
+
+
+// ============================================================
+// OPEN EVENT HISTORY
+// ============================================================
+
+function openEventHistory() {
+
+    window.location.href =
+        "event_history.html";
+
+}
+
+
+// ============================================================
+// LOGOUT
+// ============================================================
+
+function logout() {
+
+    localStorage.removeItem(
+        "username"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

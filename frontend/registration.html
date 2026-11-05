@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Driver - Register</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #0f172a,
+                #1e3a8a
+            );
+
+            padding: 30px;
+        }
+
+        .register-box {
+
+            width: 500px;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+
+            text-align: center;
+
+            color: #1e3a8a;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 30px;
+        }
+
+        label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            color: #333;
+        }
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+
+            background: #9ca3af;
+
+            cursor: not-allowed;
+        }
+
+        #message {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+        }
+
+        .success {
+
+            color: green;
+        }
+
+        .error {
+
+            color: red;
+        }
+
+        .login-link {
+
+            text-align: center;
+
+            margin-top: 20px;
+        }
+
+        .login-link a {
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="register-box">
+
+
+    <h1>
+        AI Driver
+    </h1>
+
+
+    <p class="subtitle">
+        Create Your Account
+    </p>
+
+
+    <form id="registerForm">
+
+
+        <!-- ==================================================
+             FIRST NAME
+        =================================================== -->
+
+        <label for="firstName">
+            First Name
+        </label>
+
+        <input
+            type="text"
+            id="firstName"
+            placeholder="Enter first name"
+            required
+        >
+
+
+        <!-- ==================================================
+             LAST NAME
+        =================================================== -->
+
+        <label for="lastName">
+            Last Name
+        </label>
+
+        <input
+            type="text"
+            id="lastName"
+            placeholder="Enter last name"
+            required
+        >
+
+
+        <!-- ==================================================
+             CONTACT
+        =================================================== -->
+
+        <label for="contact">
+            Contact Number
+        </label>
+
+        <input
+            type="tel"
+            id="contact"
+            placeholder="Enter contact number"
+            required
+        >
+
+
+        <!-- ==================================================
+             EMAIL
+        =================================================== -->
+
+        <label for="email">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter email address"
+            required
+        >
+
+
+        <!-- ==================================================
+             LICENSE NUMBER
+        =================================================== -->
+
+        <label for="licenseNumber">
+            Licence Number
+        </label>
+
+        <input
+            type="text"
+            id="licenseNumber"
+            placeholder="Enter licence number"
+            required
+        >
+
+
+        <!-- ==================================================
+             VEHICLE NUMBER
+        =================================================== -->
+
+        <label for="vehicleNumber">
+            Vehicle Number
+        </label>
+
+        <input
+            type="text"
+            id="vehicleNumber"
+            placeholder="Example: KA01AB1234"
+            required
+        >
+
+
+        <!-- ==================================================
+             VEHICLE TYPE
+        =================================================== -->
+
+        <label for="vehicleType">
+            Vehicle Type
+        </label>
+
+        <select
+            id="vehicleType"
+            required
+        >
+
+            <option value="">
+                Select vehicle type
+            </option>
+
+            <option value="Car">
+                Car
+            </option>
+
+            <option value="Bike">
+                Bike
+            </option>
+
+            <option value="Truck">
+                Truck
+            </option>
+
+            <option value="Bus">
+                Bus
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+
+        <!-- ==================================================
+             VEHICLE MODEL
+        =================================================== -->
+
+        <label for="vehicleModel">
+            Vehicle Model
+        </label>
+
+        <input
+            type="text"
+            id="vehicleModel"
+            placeholder="Enter vehicle model"
+            required
+        >
+
+
+        <!-- ==================================================
+             EMERGENCY CONTACT
+        =================================================== -->
+
+        <label for="emergencyContact">
+            Emergency Contact
+        </label>
+
+        <input
+            type="tel"
+            id="emergencyContact"
+            placeholder="Enter emergency contact"
+            required
+        >
+
+
+        <!-- ==================================================
+             USERNAME
+        =================================================== -->
+
+        <label for="username">
+            Username
+        </label>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter username"
+            required
+        >
+
+
+        <!-- ==================================================
+             PASSWORD
+        =================================================== -->
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter password"
+            required
+        >
+
+
+        <!-- ==================================================
+             CONFIRM PASSWORD
+        =================================================== -->
+
+        <label for="confirmPassword">
+            Confirm Password
+        </label>
+
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+            required
+        >
+
+
+        <!-- ==================================================
+             REGISTER BUTTON
+        =================================================== -->
+
+        <button
+            type="submit"
+            id="registerButton"
+        >
+            Register
+        </button>
+
+
+    </form>
+
+
+    <div id="message"></div>
+
+
+    <div class="login-link">
+
+        Already have an account?
+
+        <a href="login.html">
+            Login
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+// ============================================================
+// API URL
+// ============================================================
+
+const API_URL =
+    "http://127.0.0.1:5000";
+
+
+// ============================================================
+// REGISTRATION FORM
+// ============================================================
+
+document
+    .getElementById("registerForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            // ------------------------------------------------
+            // GET FORM VALUES
+            // ------------------------------------------------
+
+            const firstName =
+                document
+                .getElementById("firstName")
+                .value
+                .trim();
+
+
+            const lastName =
+                document
+                .getElementById("lastName")
+                .value
+                .trim();
+
+
+            const contact =
+                document
+                .getElementById("contact")
+                .value
+                .trim();
+
+
+            const email =
+                document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+            const licenseNumber =
+                document
+                .getElementById("licenseNumber")
+                .value
+                .trim();
+
+
+            const vehicleNumber =
+                document
+                .getElementById("vehicleNumber")
+                .value
+                .trim();
+
+
+            const vehicleType =
+                document
+                .getElementById("vehicleType")
+                .value;
+
+
+            const vehicleModel =
+                document
+                .getElementById("vehicleModel")
+                .value
+                .trim();
+
+
+            const emergencyContact =
+                document
+                .getElementById("emergencyContact")
+                .value
+                .trim();
+
+
+            const username =
+                document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+            const password =
+                document
+                .getElementById("password")
+                .value;
+
+
+            const confirmPassword =
+                document
+                .getElementById("confirmPassword")
+                .value;
+
+
+            const message =
+                document
+                .getElementById("message");
+
+
+            const registerButton =
+                document
+                .getElementById("registerButton");
+
+
+            // ------------------------------------------------
+            // PASSWORD CHECK
+            // ------------------------------------------------
+
+            if (
+                password !==
+                confirmPassword
+            ) {
+
+                message.textContent =
+                    "Passwords do not match";
+
+                message.className =
+                    "error";
+
+                return;
+            }
+
+
+            // ------------------------------------------------
+            // DISABLE BUTTON
+            // ------------------------------------------------
+
+            registerButton.disabled =
+                true;
+
+            message.textContent =
+                "Registering...";
+
+
+            try {
+
+
+                // =================================================
+                // STEP 1: CREATE LOGIN ACCOUNT
+                // =================================================
+
+                const userResponse =
+                    await fetch(
+
+                        API_URL +
+                        "/register",
+
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    username:
+                                        username,
+
+                                    password:
+                                        password,
+
+                                    role:
+                                        "driver"
+
+                                })
+
+                        }
+
+                    );
+
+
+                const userData =
+                    await userResponse.json();
+
+
+                // -------------------------------------------------
+                // CHECK USER REGISTRATION
+                // -------------------------------------------------
+
+                if (
+                    userData.success !== true
+                ) {
+
+                    message.textContent =
+                        userData.message ||
+                        "User registration failed";
+
+                    message.className =
+                        "error";
+
+                    registerButton.disabled =
+                        false;
+
+                    return;
+
+                }
+
+
+                // =================================================
+                // STEP 2: SAVE DRIVER DETAILS
+                // =================================================
+
+                const driverResponse =
+                    await fetch(
+
+                        API_URL +
+                        "/register-driver",
+
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    username:
+                                        username,
+
+                                    first_name:
+                                        firstName,
+
+                                    last_name:
+                                        lastName,
+
+                                    contact:
+                                        contact,
+
+                                    vehicle_number:
+                                        vehicleNumber,
+
+                                    vehicle_type:
+                                        vehicleType,
+
+                                    vehicle_model:
+                                        vehicleModel,
+
+                                    emergency_contact:
+                                        emergencyContact,
+
+                                    license_number:
+                                        licenseNumber,
+
+                                    email:
+                                        email
+
+                                })
+
+                        }
+
+                    );
+
+
+                const driverData =
+                    await driverResponse.json();
+
+
+                // =================================================
+                // CHECK DRIVER REGISTRATION
+                // =================================================
+
+                if (
+                    driverData.success === true
+                ) {
+
+                    message.textContent =
+                        "Registration successful! Redirecting to login...";
+
+                    message.className =
+                        "success";
+
+
+                    // ------------------------------------------------
+                    // SAVE USERNAME FOR LOGIN/MONITORING
+                    // ------------------------------------------------
+
+                    localStorage.setItem(
+                        "username",
+                        username
+                    );
+
+
+                    // ------------------------------------------------
+                    // REDIRECT TO LOGIN
+                    // ------------------------------------------------
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "login.html";
+
+                        },
+                        1500
+                    );
+
+                }
+
+                else {
+
+                    message.textContent =
+                        driverData.message ||
+                        "Driver details could not be saved";
+
+                    message.className =
+                        "error";
+
+                    registerButton.disabled =
+                        false;
+
+                }
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Registration error:",
+                    error
+                );
+
+
+                message.textContent =
+                    "Unable to connect to server.";
+
+                message.className =
+                    "error";
+
+
+                registerButton.disabled =
+                    false;
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
